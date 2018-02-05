@@ -15,7 +15,7 @@ Kudos to existing projects like:
 ## Design goals
 
 - Every component should be modular and reusable
-- Componant APIs must be well documented and follow established Go idioms
+- Component APIs must be well documented and follow established Go idioms
 - Performance is sacrificed (within reason) for code simplicity
 - Emulator internals should be highly observable
 
@@ -23,7 +23,7 @@ Kudos to existing projects like:
 
 My initial approach to this project was to use `go generate` to generate
 discrete functions for all < 65536 possible operation codes. This would
-significantly reduce the number of machine intructions and branches required to
+significantly reduce the number of machine instructions and branches required to
 execute any given Motorola 68000 instruction.
 
 The approach worked, (see early commits to m68k) and performed well at runtime,

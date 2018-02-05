@@ -4,9 +4,10 @@ import (
 	"os"
 	"testing"
 
-	"github.com/cavaliercoder/go-m68k/dump"
+	"github.com/cavaliercoder/genesis/vdp"
 
 	"github.com/cavaliercoder/genesis/rom"
+	"github.com/cavaliercoder/go-m68k/dump"
 )
 
 func TestGame(t *testing.T) {
@@ -23,7 +24,8 @@ func TestGame(t *testing.T) {
 
 	err = s.Run()
 	if err != nil {
-		dump.Processor(os.Stderr, s.p)
+		vdp.Dump(os.Stderr, s.v)
+		dump.Memory(os.Stderr, s.v.VRAM)
 		t.Fatal(err)
 	}
 }
