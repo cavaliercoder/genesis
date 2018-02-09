@@ -1,7 +1,7 @@
 all: check rominfo genesis
 
 check:
-	go test -v ./...
+	go test ./...
 
 rominfo:
 	cd cmd/rominfo && make

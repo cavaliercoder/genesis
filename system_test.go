@@ -4,9 +4,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/cavaliercoder/genesis/vdp"
-
 	"github.com/cavaliercoder/genesis/rom"
+	"github.com/cavaliercoder/genesis/vdp"
 	"github.com/cavaliercoder/go-m68k/dump"
 )
 
