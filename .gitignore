@@ -1,5 +1,6 @@
 *.bin
 debug.test
 cmd/rominfo/rominfo
+cmd/genesis/genesis
 roms/
 *.out
