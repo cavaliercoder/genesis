@@ -1,12 +1,10 @@
 package genesis
 
 import (
-	"os"
+	"encoding/binary"
 	"testing"
 
 	"github.com/cavaliercoder/genesis/rom"
-	"github.com/cavaliercoder/genesis/vdp"
-	"github.com/cavaliercoder/go-m68k/dump"
 )
 
 func TestGame(t *testing.T) {
@@ -23,8 +21,35 @@ func TestGame(t *testing.T) {
 
 	err = s.Run()
 	if err != nil {
-		vdp.Dump(os.Stderr, s.v)
-		dump.Memory(os.Stderr, s.v.VRAM)
 		t.Fatal(err)
+	}
+}
+
+func TestRamMirroring(t *testing.T) {
+	s := New()
+
+	// write one word at a time across entire ram range (0xE00000 - 0xFFFFFF)
+	b := []byte{0, 0, 0, 0}
+	for i := uint32(0xE00000); i <= 0xFFFFFF; i += 4 {
+		binary.BigEndian.PutUint32(b, i)
+		if _, err := s.m.Write(int(i), b); err != nil {
+			t.Errorf("error writing to 0x%08X: %v", i, err)
+			return
+		}
+
+		// read back from within 0xFF0000 - 0xFFFFFF
+		b = []byte{0, 0, 0, 0}
+		addr := 0xFF0000 + ((i - 0xE00000) % 0x10000)
+		if _, err := s.m.Read(int(addr), b); err != nil {
+			t.Errorf("error reading at 0x%08X: %v", addr, err)
+			return
+		}
+
+		// ensure value matches
+		v := binary.BigEndian.Uint32(b)
+		if v != i {
+			t.Errorf("error reading mirrored memory: expected %v, got %v", i, v)
+			return
+		}
 	}
 }

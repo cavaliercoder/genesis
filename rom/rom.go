@@ -119,6 +119,14 @@ func (r *ROM) End() uint32 {
 	return binary.BigEndian.Uint32(r.Data[0x1A4:0x1A8])
 }
 
+func (r *ROM) RAMStart() uint32 {
+	return binary.BigEndian.Uint32(r.Data[0x1A8:0x1AC])
+}
+
+func (r *ROM) RAMEnd() uint32 {
+	return binary.BigEndian.Uint32(r.Data[0x1AC:0x1B0])
+}
+
 func (r *ROM) ValidateChecksum() error {
 	var sum uint16
 	for i := 0x200; i < len(r.Data)-1; i += 2 {

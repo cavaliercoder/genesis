@@ -24,7 +24,7 @@ type VDP struct {
 // New initializes and returns a VDP.
 func New() *VDP {
 	return &VDP{
-		SR:   0x34FF,
+		SR:   0x3400,
 		VRAM: NewVRAM(),
 	}
 }
